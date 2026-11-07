@@ -9,7 +9,7 @@
 <title>Pixel Services — First a DEMO, Pay Only If You Love It!</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Arabic:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Bengali:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0a0a0b; --bg2:#100e0c;
@@ -44,10 +44,10 @@ section{scroll-margin-top:92px}
   radial-gradient(900px 720px at 50% 112%, rgba(170,119,28,.10), transparent 62%),
   radial-gradient(700px 500px at 78% 46%, rgba(212,175,55,.05), transparent 65%),
   linear-gradient(180deg,#0a0a0b 0%,#12100c 42%,#0a0a0b 100%)}
-.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;will-change:transform}
-.blob-a{width:540px;height:540px;left:-150px;top:-130px;background:radial-gradient(circle,rgba(212,175,55,.34),transparent 68%);animation:driftA 24s ease-in-out infinite}
-.blob-b{width:460px;height:460px;right:-130px;top:8%;background:radial-gradient(circle,rgba(191,149,63,.28),transparent 68%);animation:driftB 28s ease-in-out infinite}
-.blob-c{width:430px;height:430px;left:40%;top:54%;background:radial-gradient(circle,rgba(252,246,186,.14),transparent 68%);animation:driftA 32s ease-in-out infinite reverse}
+.blob{position:absolute;border-radius:50%;filter:blur(48px);pointer-events:none}
+.blob-a{width:540px;height:540px;left:-150px;top:-130px;background:radial-gradient(circle,rgba(212,175,55,.34),transparent 68%)}
+.blob-b{width:460px;height:460px;right:-130px;top:8%;background:radial-gradient(circle,rgba(191,149,63,.28),transparent 68%)}
+.blob-c{width:430px;height:430px;left:40%;top:54%;background:radial-gradient(circle,rgba(252,246,186,.14),transparent 68%)}
 @keyframes driftA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,44px) scale(1.12)}}
 @keyframes driftB{0%,100%{transform:translate(0,0) scale(1.05)}50%{transform:translate(-64px,60px) scale(.94)}}
 .bg-fx::after{content:"";position:absolute;inset:0;opacity:.4;background-image:radial-gradient(rgba(252,246,186,.12) 1px,transparent 1px);background-size:26px 26px;mask-image:radial-gradient(ellipse 90% 52% at 50% 0%,black 20%,transparent 76%);-webkit-mask-image:radial-gradient(ellipse 90% 52% at 50% 0%,black 20%,transparent 76%)}
@@ -474,6 +474,17 @@ html{scrollbar-width:thin;scrollbar-color:#bf953f #0a0a0b}
   .facet-shine{opacity:.25}
   .steps-line i{transform:scaleY(1)}
 }
+/* ===== Light & smooth mode: no live backdrop blur, no endless background motion ===== */
+.blob,.orb,.pixel,.pill i,.crystal-ring,.crystal-gem,.crystal-gem svg,.crystal-caustic,.facet-shine,.hero-glow,.hero-beam,.grad-text,.demo-banner,.contact-main::before,.marquee-track,.wa-float,.wa-float .dot,.scroll-hint span{animation:none !important}
+.hero-beam,.grain{display:none !important}
+header,.btn,.icon-btn,.pill,.promise-box,.chip,.svc,.tier,.quick-box,.step,.why-card,.final-box,.contact-box,.sticky-bar,#toTop,.scrim,.confirm-pop{backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
+header{background:rgba(10,10,11,.96)}
+.sticky-bar{background:rgba(10,10,11,.97)}
+.svc,.step,.why-card,.contact-box,.tier,.quick-box,.chip,.pill,.svc-chip,.lang-opt,.order-item{background-color:rgba(17,15,11,.94)}
+.btn-ghost,.icon-btn{background-color:rgba(24,21,15,.96)}
+.svc-view,.owner-view{background:#0d0b09}
+.facet-shine{opacity:.25}
+.crystal-gem,.crystal-gem svg,.crystal,.hero-inner,.marquee-track,.orb{will-change:auto}
 </style>
 </head>
 <body>
@@ -827,9 +838,6 @@ html{scrollbar-width:thin;scrollbar-color:#bf953f #0a0a0b}
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script>
 "use strict";
 var ENDPOINT = "https://script.google.com/macros/s/AKfycbxIVbxGXDVpBTcFqL4wzbB7oN28abc8CduDX7p0MxyDJU-vIKXmK7IQz4oWw8sJsqiQSA/exec";
@@ -2091,7 +2099,7 @@ function observeReveals(){
     document.documentElement.classList.add("js-anim");
     if(!io){
       io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){ e.target.classList.toggle("in", e.isIntersecting); });
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
       }, {threshold:.08, rootMargin:"-6% 0px -4% 0px"});
     }
     els.forEach(function(el){ io.observe(el); });
@@ -2130,20 +2138,8 @@ function requestScroll(){ if(!ticking){ ticking = true; window.requestAnimationF
 window.addEventListener("scroll", requestScroll, {passive:true});
 window.addEventListener("resize", requestScroll);
 
-/* ---------- Smooth scroll (Lenis + GSAP, guarded) ---------- */
+/* ---------- Smooth scroll: native browser scrolling (no library — light & smooth) ---------- */
 var lenis = null;
-if(!reduced && typeof Lenis !== "undefined"){
-  lenis = new Lenis({ duration: 1.12, smoothWheel: true });
-  if(typeof gsap !== "undefined"){
-    if(typeof ScrollTrigger !== "undefined"){ gsap.registerPlugin(ScrollTrigger); lenis.on("scroll", ScrollTrigger.update); }
-    gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
-    gsap.ticker.lagSmoothing(0);
-  } else {
-    var rafLoop = function(time){ lenis.raf(time); window.requestAnimationFrame(rafLoop); };
-    window.requestAnimationFrame(rafLoop);
-  }
-  lenis.on("scroll", requestScroll);
-}
 function scrollToEl(target){
   var t = typeof target === "string" ? document.querySelector(target) : target;
   if(!t) return;
@@ -2160,45 +2156,6 @@ document.addEventListener("click", function(e){
 toTop.addEventListener("click", function(){
   if(lenis) lenis.scrollTo(0, {duration:1.2}); else window.scrollTo({top:0, behavior: reduced ? "auto" : "smooth"});
 });
-
-/* ---------- GSAP hero parallax + crystal pointer (guarded) ---------- */
-if(!reduced && typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined"){
-  gsap.registerPlugin(ScrollTrigger);
-  var heroTrig = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true };
-  gsap.to(".orb1", { yPercent: 34, ease: "none", scrollTrigger: heroTrig });
-  gsap.to(".orb2", { yPercent: -26, ease: "none", scrollTrigger: heroTrig });
-  gsap.to("#heroInner", { y: -30, ease: "none", scrollTrigger: heroTrig });
-}
-if(finePointer && !reduced){
-  document.querySelectorAll(".svc").forEach(function(){});
-  document.addEventListener("pointermove", function(){}, {passive:true});
-  var crystal = document.querySelector(".crystal");
-  var heroEl = document.querySelector(".hero");
-  if(crystal && heroEl){
-    var cx = 0, cy = 0, tx = 0, ty = 0;
-    heroEl.addEventListener("pointermove", function(e){
-      tx = (e.clientX / window.innerWidth - .5) * 14;
-      ty = (e.clientY / window.innerHeight - .5) * 10;
-    });
-    (function crystalLoop(){
-      if(!document.body.classList.contains("frozen")){
-        cx += (tx - cx) * .06; cy += (ty - cy) * .06;
-        crystal.style.transform = "translate(" + cx + "px," + cy + "px)";
-      }
-      window.requestAnimationFrame(crystalLoop);
-    })();
-  }
-  /* service card spotlight (delegated, works after re-render) */
-  document.addEventListener("pointermove", function(e){
-    var card = e.target && e.target.closest ? e.target.closest(".svc") : null;
-    document.querySelectorAll(".svc").forEach(function(c){ if(c !== card) c.style.setProperty("--mx","50%"); });
-    if(card){
-      var r = card.getBoundingClientRect();
-      card.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100) + "%");
-      card.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100) + "%");
-    }
-  }, {passive:true});
-}
 
 /* ---------- Freeze / scrim (blinking fix) ---------- */
 var scrim = document.getElementById("scrim");
